@@ -1,0 +1,17 @@
+{% extends 'base.html' %} {% block content %}
+<h1>{{blog.title}}</h1>
+<div>
+  작성자: {{blog.writer}}
+  <br />
+  날짜: {{blog.pub_date}}
+</div>
+<hr />
+<p>{{blog.body}}</p>
+<a href="{% url 'blog:update' blog.id %}">수정하기</a>
+<a href="{% url 'home' %}">돌아가기</a>
+<form action="{% url 'blog:delete' blog.id %}" method="POST">
+  {% csrf_token %}
+  <input type="hidden" name="id" value="${title}" />
+  <input type="submit" value="delete" />
+</form>
+{% endblock %}

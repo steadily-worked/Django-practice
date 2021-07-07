@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+    {% block content %}
+      <header>
+        <h1>Blog</h1>
+      </header>
+      <h4><a href="{% url 'blog:new' %}">새 글 작성하기</a></h4>
+    <div class='container'>
+      {% for blog in blogs%}
+      <div>
+        <h3>{{ blog.title }}</h3>
+        {{ blog.writer}}</br>
+        {{ blog.summary }}
+        <a href="{% url 'blog:detail' blog.id %}">...more</a>
+        <a href="{% url 'blog:delete' blog.id%}">Delete Post</a> 
+      </div>
+      {%endfor %}
+    </div>
+    {% endblock %}
+  
+<!-- 
+<!DOCTYPE html>
+<html lang="en">
+  <header>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BLOG</title>
+    <style>
+      body {
+        text-align: center;
+      }
+    </style>
+  </header>
+  <body>
+    <h1>Blog Project</h1>
+    <h4><a href="{% url 'new' %}">새 글 작성하기</a></h4>
+    <div class="container">
+      {% for blog in blogs %}
+      <div>
+        <h3>{{ blog.title }}</h3>
+        <p>{{ blog.writer }}</p>
+        {{ blog.summary }}
+        <a href="{% url 'detail' blog.id %}">...more</a>
+      </div>
+      {% endfor %}
+    </div>
+  </body>
+</html> -->
