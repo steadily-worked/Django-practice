@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-  <form action="{% url 'update' blog.id %}" method="POST">
+  <form action="{% url 'blog:update' blog.id %}" method="POST">
     {% csrf_token %}
     <h4>제목: </h4>
     <input type='text' name='title' value="{{blog.title}}" />

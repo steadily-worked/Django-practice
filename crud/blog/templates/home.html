@@ -1,48 +1,32 @@
-{% extends 'base.html' %}
-{% load static %}
-    {% block content %}
-      <header>
-        <h1>Blog</h1>
-      </header>
-      <h4><a href="{% url 'blog:new' %}">새 글 작성하기</a></h4>
-    <div class='container'>
-      {% for blog in blogs%}
-      <div>
-        <h3>{{ blog.title }}</h3>
-        {{ blog.writer}}</br>
-        {{ blog.summary }}
-        <a href="{% url 'blog:detail' blog.id %}">...more</a>
-        <a href="{% url 'blog:delete' blog.id%}">Delete Post</a> 
-      </div>
-      {%endfor %}
-    </div>
-    {% endblock %}
-  
-<!-- 
-<!DOCTYPE html>
-<html lang="en">
-  <header>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BLOG</title>
-    <style>
-      body {
-        text-align: center;
-      }
-    </style>
-  </header>
-  <body>
-    <h1>Blog Project</h1>
-    <h4><a href="{% url 'new' %}">새 글 작성하기</a></h4>
-    <div class="container">
-      {% for blog in blogs %}
-      <div>
-        <h3>{{ blog.title }}</h3>
-        <p>{{ blog.writer }}</p>
-        {{ blog.summary }}
-        <a href="{% url 'detail' blog.id %}">...more</a>
-      </div>
-      {% endfor %}
-    </div>
-  </body>
-</html> -->
+{% extends 'base.html' %} {% block content %} {% if user.is_authenticated %}
+{{user.location}}에 사는 {{user.university}}에 다니는 {{user.nickname}}님
+안녕하세요! {% endif %}
+<a href="?search=true&writer={{user.nickname}}">내가 쓴 글</a>
+<h1>Blog Project</h1>
+<h4><a href="{% url 'blog:new_with_django_form' %}">New Post</a></h4>
+<div class="container">
+  {% for blog in blogs%}
+  <div>
+    <h3>{{ blog.title }}</h3>
+    {{ blog.id }} <br />
+    {{ blog.writer }} <br />
+    {{ blog.summary }}
+    <a href="{% url 'blog:detail' blog.id %}">...more</a>
+  </div>
+  {% endfor %}
+</div>
+<br />
+<div class="paginator">
+  {% if blogs.has_previous %}
+  <a href="?page=1">처음</a>
+  <a href="?page={{blogs.previous_page_number}}">이전</a>
+  {% endif %}
+  <span>{{blogs.number}}</span>
+  <span>of</span>
+  <span>{{blogs.paginator.num_pages}}</span>
+  {% if blogs.has_next %}
+  <a href="?page={{blogs.next_page_number}}">다음</a>
+  <a href="?page={{blogs.paginator.num_pages}}">마지막</a>
+  {% endif %}
+</div>
+{% endblock %}

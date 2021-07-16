@@ -1,5 +1,6 @@
 {% extends 'base.html' %} {% block content %}
 <h1>{{blog.title}}</h1>
+<p>유저: {{blog.user.username}}</p>
 <div>
   작성자: {{blog.writer}}
   <br />
@@ -7,6 +8,9 @@
 </div>
 <hr />
 <p>{{blog.body}}</p>
+{% if blog.image %}
+<p><img src="{{blog.image.url}}" alt="" /></p>
+{% endif %}
 <a href="{% url 'blog:update' blog.id %}">수정하기</a>
 <a href="{% url 'home' %}">돌아가기</a>
 <form action="{% url 'blog:delete' blog.id %}" method="POST">
